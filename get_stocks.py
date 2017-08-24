@@ -4,7 +4,7 @@ import xlrd
 
 
 if __name__ == "__main__":
-	xl_workbook = xlrd.open_workbook("A.xlsx")
+	xl_workbook = xlrd.open_workbook("A_stocklist.xlsx")
 	sh_sheet = xl_workbook.sheet_by_name("SH")
 	sz_sheet = xl_workbook.sheet_by_name("SZ")
 
