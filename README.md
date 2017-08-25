@@ -7,6 +7,11 @@ Reference Examples [Example1](https://ntguardian.wordpress.com/2016/09/19/introd
 ## Introduction
 In this project, you will be able to download stock data from Yahoo Finance and then visualize the data you get through making different plots. Although you may not be able to come up with precise predictions of how the stock will behave from the plots made in this project, but it's fun to make these plots yourself to compare with plots we see from finance websites and get a general feeling of how the stock behaved in the days passed.  
 
+Here is one of the plots that we are going to come up with using python and javascript.
+![20-Day Moving Average](https://raw.githubusercontent.com/yijingxiao/Stock-Crawler-Analysis/master/blog-images/20daymovingavg.png)
+
+This plot looks simple but it's pretty nice and clean. Does this plot looks familiar with you? I believe you must have come across plots like this on the finance webpages like Google and Yahoo. You can also make one for your favorite stock yourself. :smiley: Just follow me and read through this blog. 
+
 Ok, let's get started!
 
 ## Getting Started
