@@ -336,7 +336,7 @@ df4.loc[:,"20d"].plot(ax = ax, color = "blue")
 ```
 Here comes our final plot of this project, nice and clean:
 
-![20-Day Moving Average](https://github.com/yijingxiao/Stock-Crawler-Analysis/blob/master/blog%20images/20day%20moving%20avg.png)
+![20-Day Moving Average](https://github.com/yijingxiao/Stock-Crawler-Analysis/blob/master/blog_images/20daymovingavg.png)
 
 ## Summary
 Thanks for spending time reading this blog! You finally make it to the end~ :sunglasses: :sunglasses:
