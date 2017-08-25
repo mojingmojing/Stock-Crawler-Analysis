@@ -1,3 +1,5 @@
 theme: jekyll-theme-cayman
 plugins:
   - jemoji
+title: Stock Crawler & Analysis Project
+description: This blog introduces Yijing's project on crawling&downloading stock data for Shanghai&Shenzhen market and analyze with plots created by python libraries
