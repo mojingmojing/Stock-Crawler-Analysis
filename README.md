@@ -1,6 +1,6 @@
-## Stock Crawler & Analysis
+# Stock Crawler & Analysis
 
-### Introduction
+## Introduction
 In this project, you will be able to download stock data from Yahoo Finance and then visualize the data you get through making different plots. Although you may not be able to come up with precise predictions of how the stock will behave from the plots made in this project, but it's fun to make these plots yourself to compare with plots we see from finance websites and get a general feeling of how the stock behaved in the days passed.  
 
 Ok, let's get started!
@@ -54,7 +54,7 @@ sz_stocks = ['000001', '000002', '000004', '000005', '000006', ...];
 ```
 Try copy this output into your web browser Console and you can also skip this since this is also included in the code of our next step. Now we are ready to move on to the next step of this project.
 
-### Download Stock Data from Yahoo Finance
+## Download Stock Data from Yahoo Finance
 There are many ways to download stock data from finance websites. Here is the way of how we are going to do in this project. In the project files, open file "download_stock.js" with any of the text editors you have. When it's opened, you should see lines of code that look like this:
 
 ```javascript
@@ -93,7 +93,7 @@ for (var i = 0; i < sz_stocks.length; i++){
 ```
 If you haven't copied the output result from the python program above, you can copy the list of stock numbers from this file. All you need to do is to copy all the codes and paste into your web browser Console. Hit Enter and stock data will start to download. In order to enter the Console of your web browser, open the web browser, right clock and select "inspect". In the window pops up, there will be a "Console" button on the top ribbon. In Chrome, a Console will look like this: 
 
-![Chrome Console Image](https://github.com/yijingxiao/Stock-Crawler-Analysis/blob/master/blog%20images/chrome%20console.png)
+![Chrome Console Image](Stock-Crawler-Analysis/blog images/chrome console.png)
 
 The main function of this program is to create a button with link to the the stocks that you want to download. A simulated click on the link will be performed by the program and a .json file will be downloaded for each stock and saved to the download folder of your web browser. For each stock, this program downloads all the data starting from the very first day stock was released to the day you download data.
 
@@ -101,7 +101,7 @@ One more thing before we can start on making plots and visualize the data we jus
 
 Everything is good to go and we can start making plots for your stock data now.
 
-### Visualizing Stock Data
+## Visualizing and Analyzing Stock Data
 We are going to use python to create all the plots for the stock data we have. So we need to first import all the libraries that are going to be used in the following steps. In the project files, there is a "stocks_plot.ipynb" jupyter notebook file with all the steps shown for making plots. The libraries that we are going to import here are:
 
 ```python
@@ -148,7 +148,8 @@ pylab.rcParams['figure.figsize'] = (15, 9)
 ```
 Everything looks perfect and we are ready for the best part of this project! 
 
-- Adjusted Closing Price History Curve
+#### Adjusted Closing Price History Curve
+
 First let's check if we have downloaded the correct data. One of the methods is to show all the adjusted closing price in one plot and compare with the plot we get from Yahoo Finance. We are going to create a dataframe with Pandas library and then use the plot function that comes with the dataframe to show our adjusted closing price history curve. To create a dataframe with all the stock history data, let's run the following codes:
 
 ```python
@@ -172,13 +173,56 @@ ax.set_title("Adjusted Closing Price History Curve", fontsize = 20)
 ```
 With the above codes, you will be able to get a plot that looks like this:
 
-![Adjclose History Curve](https://github.com/yijingxiao/Stock-Crawler-Analysis/blob/master/blog%20images/adjclose%20history.png)
+![Adjclose History Curve](Stock-Crawler-Analysis/blog images/adjclose history.png)
 
 If you are not sure whether you are downloading the right stock data, you can go to Yahoo Finance and check with the max stock curve for this stock. I get a curve that looks like this, which matches perfectly with our plot above.
 
-![Yahoo History Curve](https://github.com/yijingxiao/Stock-Crawler-Analysis/blob/master/blog%20images/adjclose%20history%20yahoo.jpeg)
+![Yahoo History Curve](Stock-Crawler-Analysis/blog images/adjclose history yahoo.jpeg)
 
 So we are on the right track and in addition to visualizing the history curve of this stock, we are going to do something with a lot more fun!
+
+#### Make Candlestick Plot
+
+The second plot we are going to make is called a candlestick plot. Remember when I was a kid, the first impression I had with stock plots are those red and green candle shaped rectangles that line up as a curve on the television. In USA, candlestick plots shows red as loss and back as gain while in China, red means gain and green means loss. Since we have years of data stored in our first dataframe and we are not able to show all of them in a candlestick plot. We are gong to create a new dataframe by slicing the data for the recent two months from the first dataframe. Through running the following codes, we will be able to create a candlestick plot:
+
+```python
+# Create Dataframe for data between Jun 26th and Aug 22nd
+# Getting ready for Candlestick Plot
+df2 = df1.loc['20170626':'20170822']
+
+# Create a new DataFrame which includes stock data for each day shown on each candle stick
+plotdata = df2.loc[:,["Open", "High", "Low", "Close"]]
+stick = 1 # Candle stick width
+ 
+# Set plot parameters
+fig, ax = plt.subplots()
+fig.subplots_adjust(bottom=0.2)
+mondays = WeekdayLocator(MONDAY)        # major ticks
+alldays = DayLocator()              # minor ticks
+weekFormatter = DateFormatter('%b %d')  # date format
+ax.xaxis.set_major_locator(mondays)
+ax.xaxis.set_minor_locator(alldays)
+ax.xaxis.set_major_formatter(weekFormatter)
+ 
+# Create the candelstick chart, Gain shown in red, Loss shown in green
+candlestick_ohlc(ax, list(zip(list(date2num(plotdata.index.tolist())), 
+                plotdata["Open"].tolist(), plotdata["High"].tolist(),
+                plotdata["Low"].tolist(), plotdata["Close"].tolist())),
+                colorup = "red", colordown = "green", width = stick)
+
+# Adjust plot characteristic parameters
+ax.grid(True)
+ax.xaxis_date()
+ax.autoscale_view()
+ax.set_xlabel("Date", fontsize = 15)
+ax.set_ylabel("Price", fontsize = 15)
+ax.set_title("Candlestick Chart (June 26th to August 22nd)", fontsize = 20)
+plt.setp(plt.gca().get_xticklabels(), rotation=45, horizontalalignment='right')
+plt.show()
+```
+From the above code, I think you will be able to get a candlestick plot that looks like this:
+
+![Candlestick Plot](Stock-Crawler-Analysis/blog images/candlestick chart.png)
 
 
 In a candlestick chart, a green candlestick means the closing price is higher than the open price and a red candlestick means the closing price is higher than the open price. This presentation method of using red as gain and green as loss is commonly used in stock markets in China. 
