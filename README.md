@@ -1,6 +1,6 @@
 # Stock Crawler & Analysis Project
 
-By Yijing Xiao
+By [Yijing Xiao](https://yijingxiao.github.io/)
 
 Reference Examples [Example1](https://ntguardian.wordpress.com/2016/09/19/introduction-stock-market-data-python-1/) [Example2](http://matplotlib.org/examples/pylab_examples/finance_demo.html)
 
@@ -341,4 +341,4 @@ Thanks for spending time reading this blog! You finally make it to the end~ :sun
 
 Making stock plots with python is a lot of fun and I hope you enjoyed this whole process. 
 
-Welcome to visit [my github page](https://github.com/yijingxiao) ! :smiley: :smiley:
+Welcome to visit [my github page](https://yijingxiao.github.io/) or visit [my github profile](https://github.com/yijingxiao) ! :smiley: :smiley:
