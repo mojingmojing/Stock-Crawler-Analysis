@@ -1,5 +1,9 @@
 # Stock Crawler & Analysis
 
+By Yijing Xiao
+
+Reference Examples [Example1](https://ntguardian.wordpress.com/2016/09/19/introduction-stock-market-data-python-1/) [Example2](http://matplotlib.org/examples/pylab_examples/finance_demo.html)
+
 ## Introduction
 In this project, you will be able to download stock data from Yahoo Finance and then visualize the data you get through making different plots. Although you may not be able to come up with precise predictions of how the stock will behave from the plots made in this project, but it's fun to make these plots yourself to compare with plots we see from finance websites and get a general feeling of how the stock behaved in the days passed.  
 
@@ -183,7 +187,7 @@ So we are on the right track and in addition to visualizing the history curve of
 
 #### Make Candlestick Plot
 
-The second plot we are going to make is called a candlestick plot. Remember when I was a kid, the first impression I had with stock plots are those red and green candle shaped rectangles that line up as a curve on the television. In USA, candlestick plots shows red as loss and back as gain while in China, red means gain and green means loss. Since we have years of data stored in our first dataframe and we are not able to show all of them in a candlestick plot. We are gong to create a new dataframe by slicing the data for the recent two months from the first dataframe. Through running the following codes, we will be able to create a candlestick plot:
+The second plot we are going to make is called a candlestick plot. Since we have years of data stored in our first dataframe and we are not able to show all of them in a candlestick plot. We are gong to create a new dataframe by slicing the data for the recent two months from the first dataframe. Through running the following codes, we will be able to create a candlestick plot:
 
 ```python
 # Create Dataframe for data between Jun 26th and Aug 22nd
@@ -225,4 +229,117 @@ From the above code, I think you will be able to get a candlestick plot that loo
 ![Candlestick Plot](Stock-Crawler-Analysis/blog images/candlestick chart.png)
 
 
-In a candlestick chart, a green candlestick means the closing price is higher than the open price and a red candlestick means the closing price is higher than the open price. This presentation method of using red as gain and green as loss is commonly used in stock markets in China. 
+Remember when I was a kid, the first impression I had with stock plots are those red and green candle shaped rectangles that line up as a curve on the television. In a candlestick chart, a green candlestick means the closing price is higher than the open price and a red candlestick means the closing price is higher than the open price. This presentation method of using red as gain and green as loss is commonly used in stock markets in China. In USA, candlestick plots shows red as loss and black as gain. 
+
+#### Plot Stock Return (Ratio btwn Price of the day and Price at beginning of year)
+We always want to see how much have we earned after we buy a stock at a certain time. For example, if we buy this stock, 002241SZ at the beginning of year 2017, what is the stock return we get for year to date? Here we will stock return by dividing the price of the stock of the day with the price of the stock at the first trading day of the year. 
+
+Also we need to create a dataframe to store the stock price from first trading day of the year to today's date. Unlike first dataframe we created and the dataframe we created for candlestick plot, here we only need adjusted closing price and date to create this plot. So let's run the following code to see how this new data frame is created:
+
+```python
+# Creat Dataframe with just adjusted closing price and date
+df3 = pd.DataFrame([ts, price_adjclose], index=["Date", "Adjclose"]).T
+df3 = df3.set_index("Date")
+df3.index = pd.to_datetime(df3.index)
+
+# Drop lines with "None" values
+df3 = df3.dropna(axis=0, how='all')
+
+# Create a new Dataframe to get all the year to date data
+Df3 = df3.loc['20170101':'20171231']
+```
+The new dataframe takes out the "Adjclose" column from the first dataframe df1 and sliced with respect to date data to get the year to date prices we need. Now it's time to make the stock return plot:
+
+```python
+# Compare price for the day with price at beginning of year
+stock_return = Df3.apply(lambda x: x / x[0])
+
+# Set plot parameters
+fig, ax = plt.subplots()
+fig.subplots_adjust(bottom=0.2)
+ax.xaxis.set_major_locator(mondays)
+ax.xaxis.set_minor_locator(alldays)
+ax.xaxis.set_major_formatter(weekFormatter)
+ 
+# Adjust plot characteristic parameters
+ax.grid(True) 
+ax.xaxis_date()
+ax.autoscale_view()
+ax.set_xlabel("Date", fontsize = 15)
+ax.set_ylabel("Price Ratio", fontsize = 15)
+ax.set_title("Ratio btwn Price of the day and Price at beginning of year", fontsize = 20)
+plt.setp(plt.gca().get_xticklabels(), rotation=45, horizontalalignment='right')
+plt.plot(stock_return)
+plt.plot((stock_return.index[0],stock_return.index[-1]),(1,1), 'k-')
+plt.xlim(stock_return.index[0],stock_return.index[-1])
+plt.show()
+```
+Alright, here comes the plot for ratio between price of the day and price at the beginning of the year. It looks like this stock is doing very well because not it's August and the stock curve goes up constantly throughout the year. How's the performance of your stock?
+
+![Stock Return](Stock-Crawler-Analysis/blog images/stock return.png)
+
+#### Plot Price Change Percent within Each Trading Day
+The last plot is really suitable for long term stock holders. If you invest in a stock at the beginning of the year and then plan to sell the stock in the middle of the year or by the end of the year, the above plot might be a good choice for you. However, for short term investors, maybe they are looking at short term performance of a stock, say, performance of a day. So we are going to make a plot for the price percentage change within each trading day. Method is the same with the above stock return plot and we will call the plot here as stock change. 
+
+We define stock change as 
+```
+[(price of today - price of yesterday)] / price of yesterday *100%
+```
+and we will use the same dataframe to make our computations for stock change. The code used to create this stock change plot is pretty similar to stock return codes and let's see how your plot looks like.
+
+```python
+# Price change within a trading day, calculated by 
+# [(closing_price)-(closing_price_a_day_ahead)]/(closing_price_a_day_ahead)
+stock_change = Df3.apply(lambda x: np.multiply(np.divide(np.subtract(x, x.shift(1)), x.shift(1)),100)) # shift moves dates back by 1.
+stock_change.columns  = ["Change"]
+
+# Set plot parameters
+...
+
+# Adjust plot characteristic parameters
+...
+```
+
+My plot looks like this and a horizontal line at y=0 is added to show a better comparison for the ups and downs for each day.
+
+![Stock Change](Stock-Crawler-Analysis/blog images/stock change.png)
+
+#### 20-Day Moving Average
+Rather than looking at the performance of the past data for each stock, we also need to make some predictions of how the stock will go for the next few days or so. Stock experts created a method to help us get a better prelook into how the stock will behave in the near future and it's called 20-day moving average. This method is implemented by taking the average of the closing price of the stock for the past 20 days and most likely the stock will follow it's trend from the 20-day moving average curve for the next short period. Let's plot this curve on top of the candlestick chart to get a better visualization of how this works.
+
+To do this, we will need to create a window of 20 days on the data and take the average for the numbers we get for these 20 days. Also, we may not be able to get a useful number until we have 20 days to calculate. So for the first 19 days, we will need to drop the date since they will not be useful.
+
+The code for creating candlestick chart is exactly the same as what we show before and we will just need to add one line for the 20-day moving average curve plot.
+
+```python
+# Creat Dataframe with slicing by date from the first Dataframe
+df4 = df1.loc['20170101':'20171231']
+
+#Calculate 20-day Moving Average from closing price and attach to the original dataframe
+df4["20d"] = np.round(df4['Close'].rolling(window = 20, center = False).mean(), 2)
+df4 = df4.dropna()
+ 
+# Create a new DataFrame which includes stock data for each day shown on each candle stick
+plotdata = df4.loc[:,["Open", "High", "Low", "Close"]]
+
+# Set plot parameters
+...
+
+# Create the candlestick chart, Gain shown in red, Loss shown in green
+...
+
+# Add moving averages lines to the Candlestick chart
+df4.loc[:,"20d"].plot(ax = ax, color = "blue")
+
+# Adjust plot characteristic parameters
+...
+```
+Here comes our final plot of this project, nice and clean:
+
+![20-Day Moving Average](Stock-Crawler-Analysis/blog images/20day moving avg.png)
+
+## Summary
+Thanks for spending time reading this blog! You finally make it to the end~ :sunglasses: :sunglasses:
+Making stock plots with python is a lot of fun and I hope you enjoyed this whole process. 
+
+Welcome to visit [my github page](https://github.com/yijingxiao)! :smiley: :smiley:
