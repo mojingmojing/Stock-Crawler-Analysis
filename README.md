@@ -97,7 +97,7 @@ for (var i = 0; i < sz_stocks.length; i++){
 ```
 If you haven't copied the output result from the python program above, you can copy the list of stock numbers from this file. All you need to do is to copy all the codes and paste into your web browser Console. Hit Enter and stock data will start to download. In order to enter the Console of your web browser, open the web browser, right clock and select "inspect". In the window pops up, there will be a "Console" button on the top ribbon. In Chrome, a Console will look like this: 
 
-![Chrome Console Image](Stock-Crawler-Analysis/blog images/chrome console.png)
+![Chrome Console Image](https://github.com/yijingxiao/Stock-Crawler-Analysis/blob/master/blog%20images/chrome%20console.png)
 
 The main function of this program is to create a button with link to the the stocks that you want to download. A simulated click on the link will be performed by the program and a .json file will be downloaded for each stock and saved to the download folder of your web browser. For each stock, this program downloads all the data starting from the very first day stock was released to the day you download data.
 
@@ -340,6 +340,7 @@ Here comes our final plot of this project, nice and clean:
 
 ## Summary
 Thanks for spending time reading this blog! You finally make it to the end~ :sunglasses: :sunglasses:
+
 Making stock plots with python is a lot of fun and I hope you enjoyed this whole process. 
 
-Welcome to visit [my github page](https://github.com/yijingxiao)! :smiley: :smiley:
+Welcome to visit [my github page](https://github.com/yijingxiao) ! :smiley: :smiley:
