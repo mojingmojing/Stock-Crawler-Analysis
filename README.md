@@ -91,7 +91,9 @@ for (var i = 0; i < sz_stocks.length; i++){
 	setTimeout(downloadStocks, (i + sh_stocks.length) * Math.random()*10000, sz_stocks[i], "SZ", start_date, end_date);
 }
 ```
-If you haven't copied the output result from the python program above, you can copy the list of stock numbers from this file. All you need to do is to copy all the codes and paste into your web browser Console. Hit Enter and stock data will start to download. 
+If you haven't copied the output result from the python program above, you can copy the list of stock numbers from this file. All you need to do is to copy all the codes and paste into your web browser Console. Hit Enter and stock data will start to download. In order to enter the Console of your web browser, open the web browser, right clock and select "inspect". In the window pops up, there will be a "Console" button on the top ribbon. In Chrome, a Console will look like this: 
+
+![Chrome Console Image](https://github.com/yijingxiao/Stock-Crawler-Analysis/blob/master/blog%20images/chrome%20console.png "Logo Title Text 1")
 
 The main function of this program is to create a button with link to the the stocks that you want to download. A simulated click on the link will be performed by the program and a .json file will be downloaded for each stock and saved to the download folder of your web browser. For each stock, this program downloads all the data starting from the very first day stock was released to the day you download data.
 
@@ -100,7 +102,74 @@ One more thing before we can start on making plots and visualize the data we jus
 Everything is good to go and we can start making plots for your stock data now.
 
 ### Visualizing Stock Data
+We are going to use python to create all the plots for the stock data we have. So we need to first import all the libraries that are going to be used in the following steps. In the project files, there is a "stocks_plot.ipynb" jupyter notebook file with all the steps shown for making plots. The libraries that we are going to import here are:
 
+```python
+# Import all libraries
+import json
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+%pylab inline
+import datetime
+from dateutil.relativedelta import relativedelta
+from matplotlib.dates import DateFormatter, WeekdayLocator, DayLocator, MONDAY
+from matplotlib.finance import candlestick_ohlc
+```
+Some of these libraries comes with the installation of python on your computer but some don't. If you don't have some of the libraries in this list, try pip install method to get libraries you are missing:
+
+```
+pip install libraryname
+```
+Here we will take one of the stocks, 002241SZ, as an example and show use its data to make all the plots. Before we make our first plot, we need to read the data from "002241.json" file and change format of some of them so they will be more readable for the libraries used for making plots. The data in the .json file is stored in a structure of dictionaries and lists. Here we will use the following code to read and store data we get from .json file:
+
+```python
+# Read stock data from file, stock number can be changed
+stock = json.load(open("./download stocks/002241.json", "r"))
+
+# Find the corresponding prices in the .json file data
+price_open = stock["chart"]["result"][0]["indicators"]["quote"][0]["open"]
+price_close = stock["chart"]["result"][0]["indicators"]["quote"][0]["close"]
+price_high = stock["chart"]["result"][0]["indicators"]["quote"][0]["high"]
+price_low = stock["chart"]["result"][0]["indicators"]["quote"][0]["low"]
+volume = stock["chart"]["result"][0]["indicators"]["quote"][0]["volume"]
+price_adjclose = stock["chart"]["result"][0]["indicators"]["adjclose"][0]["adjclose"]
+
+# Change timestamp into string dates
+ts = [ datetime.datetime.fromtimestamp(int(ts+86400)).strftime('%Y-%m-%d') for ts in stock["chart"]["result"][0]["timestamp"]]
+```
+In addition to read and store data, we also see that in the last part of the code, we change the format of timestamp into string. The reason behind this is the time we get is in seconds and we need to change this into year-month-day.
+
+After we read all the data we need from the .json file, we can first set the format of the plots so all the plots we make will be shown in a better manner. We will run the following line of code here to preset the plot size: 
+
+```python
+pylab.rcParams['figure.figsize'] = (15, 9)
+```
+Everything looks perfect and we are ready for the best part of this project! 
+
+First let's check if we have downloaded the correct data. One of the methods is to show all the adjusted closing price in one plot and compare with the plot we get from Yahoo Finance. We are going to create a dataframe with Pandas library and then use the plot function that comes with the dataframe to show our adjusted closing price history curve. To create a dataframe with all the stock history data, let's run the following codes:
+
+```python
+
+# Creat first Dataframe to include all the information read from .json file
+df1 = pd.DataFrame([ts, price_open, price_close, price_high, price_low, volume, price_adjclose], index=["Date", "Open", "Close", "High", "Low", "Volume", "Adjclose"]).T
+df1 = df1.set_index("Date")
+df1.index = pd.to_datetime(df1.index)
+
+# Drop lines that are all "None" object
+df1 = df1.dropna(axis=0, how='all')
+```
+In the codes above, we can see that some of the lines in the dataframe df1 is dropped. This because the prices of some of the trading days are shown as "None" objects and we are not going to need these numbers for our plots. The next step, we are going to create a curve for all these history adjusted closing data, so the following codes will be run:
+
+```python
+# Plot history price curve for Ajusted Closing Price
+ax = df1["Adjclose"].plot(grid = True)
+ax.set_xlabel("Date", fontsize = 15)
+ax.set_ylabel("Adjusted Closing Price", fontsize = 15)
+ax.set_title("Adjusted Closing Price History Curve", fontsize = 20)
+```
+With the above codes, you will be able to get a plot that looks like this:
 
 
 In a candlestick chart, a green candlestick means the closing price is higher than the open price and a red candlestick means the closing price is higher than the open price. This presentation method of using red as gain and green as loss is commonly used in stock markets in China. 
