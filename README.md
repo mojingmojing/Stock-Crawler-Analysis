@@ -177,7 +177,7 @@ ax.set_title("Adjusted Closing Price History Curve", fontsize = 20)
 ```
 With the above codes, you will be able to get a plot that looks like this:
 
-![Adjclose History Curve](https://github.com/yijingxiao/Stock-Crawler-Analysis/blob/master/blog-images/adjclosehistory.pngg)
+![Adjclose History Curve](https://github.com/yijingxiao/Stock-Crawler-Analysis/blob/master/blog-images/adjclosehistory.png)
 
 If you are not sure whether you are downloading the right stock data, you can go to Yahoo Finance and check with the max stock curve for this stock. I get a curve that looks like this, which matches perfectly with our plot above.
 
