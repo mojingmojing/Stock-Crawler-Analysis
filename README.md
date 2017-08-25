@@ -148,6 +148,7 @@ pylab.rcParams['figure.figsize'] = (15, 9)
 ```
 Everything looks perfect and we are ready for the best part of this project! 
 
+- Adjusted Closing Price History Curve
 First let's check if we have downloaded the correct data. One of the methods is to show all the adjusted closing price in one plot and compare with the plot we get from Yahoo Finance. We are going to create a dataframe with Pandas library and then use the plot function that comes with the dataframe to show our adjusted closing price history curve. To create a dataframe with all the stock history data, let's run the following codes:
 
 ```python
@@ -177,6 +178,7 @@ If you are not sure whether you are downloading the right stock data, you can go
 
 ![Yahoo History Curve](https://github.com/yijingxiao/Stock-Crawler-Analysis/blob/master/blog%20images/adjclose%20history%20yahoo.jpeg)
 
-So we are on the right track and in addition to visualizing the history curve of this stock, we 
+So we are on the right track and in addition to visualizing the history curve of this stock, we are going to do something with a lot more fun!
+
 
 In a candlestick chart, a green candlestick means the closing price is higher than the open price and a red candlestick means the closing price is higher than the open price. This presentation method of using red as gain and green as loss is commonly used in stock markets in China. 
