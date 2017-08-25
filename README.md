@@ -97,7 +97,7 @@ for (var i = 0; i < sz_stocks.length; i++){
 ```
 If you haven't copied the output result from the python program above, you can copy the list of stock numbers from this file. All you need to do is to copy all the codes and paste into your web browser Console. Hit Enter and stock data will start to download. In order to enter the Console of your web browser, open the web browser, right clock and select "inspect". In the window pops up, there will be a "Console" button on the top ribbon. In Chrome, a Console will look like this: 
 
-![Chrome Console Image](https://github.com/yijingxiao/Stock-Crawler-Analysis/blob/master/blog_images/chromeconsole.png)
+![Chrome Console Image](https://github.com/yijingxiao/Stock-Crawler-Analysis/blob/master/blog-images/chromeconsole.png)
 
 The main function of this program is to create a button with link to the the stocks that you want to download. A simulated click on the link will be performed by the program and a .json file will be downloaded for each stock and saved to the download folder of your web browser. For each stock, this program downloads all the data starting from the very first day stock was released to the day you download data.
 
@@ -177,11 +177,11 @@ ax.set_title("Adjusted Closing Price History Curve", fontsize = 20)
 ```
 With the above codes, you will be able to get a plot that looks like this:
 
-![Adjclose History Curve](https://github.com/yijingxiao/Stock-Crawler-Analysis/blob/master/blog%20images/adjclose%20history.png)
+![Adjclose History Curve](https://github.com/yijingxiao/Stock-Crawler-Analysis/blob/master/blog-images/adjclosehistory.pngg)
 
 If you are not sure whether you are downloading the right stock data, you can go to Yahoo Finance and check with the max stock curve for this stock. I get a curve that looks like this, which matches perfectly with our plot above.
 
-![Yahoo History Curve](https://github.com/yijingxiao/Stock-Crawler-Analysis/blob/master/blog%20images/adjclose%20history%20yahoo.jpeg)
+![Yahoo History Curve](https://github.com/yijingxiao/Stock-Crawler-Analysis/blob/master/blog-images/adjclosehistoryyahoo.jpeg)
 
 So we are on the right track and in addition to visualizing the history curve of this stock, we are going to do something with a lot more fun!
 
@@ -226,8 +226,7 @@ plt.show()
 ```
 From the above code, I think you will be able to get a candlestick plot that looks like this:
 
-![Candlestick Plot](https://github.com/yijingxiao/Stock-Crawler-Analysis/blob/master/blog%20images/candlestick%20chart.png)
-
+![Candlestick Plot](https://github.com/yijingxiao/Stock-Crawler-Analysis/blob/master/blog-images/candlestickchart.png)
 
 Remember when I was a kid, the first impression I had with stock plots are those red and green candle shaped rectangles that line up as a curve on the television. In a candlestick chart, a green candlestick means the closing price is higher than the open price and a red candlestick means the closing price is higher than the open price. This presentation method of using red as gain and green as loss is commonly used in stock markets in China. In USA, candlestick plots shows red as loss and black as gain. 
 
@@ -276,7 +275,7 @@ plt.show()
 ```
 Alright, here comes the plot for ratio between price of the day and price at the beginning of the year. It looks like this stock is doing very well because not it's August and the stock curve goes up constantly throughout the year. How's the performance of your stock?
 
-![Stock Return](https://github.com/yijingxiao/Stock-Crawler-Analysis/blob/master/blog%20images/stock%20return.png)
+![Stock Return](https://github.com/yijingxiao/Stock-Crawler-Analysis/blob/master/blog-images/stockreturn.png)
 
 #### Plot Price Change Percent within Each Trading Day
 The last plot is really suitable for long term stock holders. If you invest in a stock at the beginning of the year and then plan to sell the stock in the middle of the year or by the end of the year, the above plot might be a good choice for you. However, for short term investors, maybe they are looking at short term performance of a stock, say, performance of a day. So we are going to make a plot for the price percentage change within each trading day. Method is the same with the above stock return plot and we will call the plot here as stock change. 
@@ -302,7 +301,7 @@ stock_change.columns  = ["Change"]
 
 My plot looks like this and a horizontal line at y=0 is added to show a better comparison for the ups and downs for each day.
 
-![Stock Change](https://github.com/yijingxiao/Stock-Crawler-Analysis/blob/master/blog%20images/stock%20change.png)
+![Stock Change](https://github.com/yijingxiao/Stock-Crawler-Analysis/blob/master/blog-images/stockchange.png)
 
 #### 20-Day Moving Average
 Rather than looking at the performance of the past data for each stock, we also need to make some predictions of how the stock will go for the next few days or so. Stock experts created a method to help us get a better prelook into how the stock will behave in the near future and it's called 20-day moving average. This method is implemented by taking the average of the closing price of the stock for the past 20 days and most likely the stock will follow it's trend from the 20-day moving average curve for the next short period. Let's plot this curve on top of the candlestick chart to get a better visualization of how this works.
@@ -336,7 +335,7 @@ df4.loc[:,"20d"].plot(ax = ax, color = "blue")
 ```
 Here comes our final plot of this project, nice and clean:
 
-![20-Day Moving Average](Stock-Crawler-Analysis/blog-images/20daymovingavg.png)
+![20-Day Moving Average](https://github.com/yijingxiao/Stock-Crawler-Analysis/blob/master/blog-images/20daymovingavg.png)
 
 ## Summary
 Thanks for spending time reading this blog! You finally make it to the end~ :sunglasses: :sunglasses:
