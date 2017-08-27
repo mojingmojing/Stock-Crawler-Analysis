@@ -2,8 +2,6 @@
 
 By [Yijing Xiao](https://yijingxiao.github.io/)
 
-Reference Examples [Example1](https://ntguardian.wordpress.com/2016/09/19/introduction-stock-market-data-python-1/) [Example2](http://matplotlib.org/examples/pylab_examples/finance_demo.html)
-
 ## Introduction
 In this project, you will be able to download stock data from Yahoo Finance and then visualize the data you get through making different plots. Although you may not be able to come up with precise predictions of how the stock will behave from the plots made in this project, but it's fun to make these plots yourself to compare with plots we see from finance websites and get a general feeling of how the stock behaved in the days passed.  
 
@@ -344,6 +342,6 @@ Here comes our final plot of this project, nice and clean:
 ## Summary
 Thanks for spending time reading this blog! You finally make it to the end~ :sunglasses: :sunglasses:
 
-Making stock plots with python is a lot of fun and I hope you enjoyed this whole process. 
+Making stock plots with python is a lot of fun and I hope you enjoyed this whole process. Here are some of the reference examples of this project: [Example1](https://ntguardian.wordpress.com/2016/09/19/introduction-stock-market-data-python-1/) [Example2](http://matplotlib.org/examples/pylab_examples/finance_demo.html)
 
 Welcome to visit [my github page](https://yijingxiao.github.io/) or visit [my github profile](https://github.com/yijingxiao) ! :smiley: :smiley:
